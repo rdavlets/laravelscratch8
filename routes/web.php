@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,7 @@ use App\Models\Post;
 */
 
 Route::get('/', function () {
+    //    ddd($posts);
     return view('posts',[
         'posts' => Post::all()
     ]);
@@ -22,9 +24,11 @@ Route::get('/', function () {
 
 Route::get('posts/{post}', function ($slug) {
 
+    $post = Post::findOrFail($slug);
+
     return view('post', [
-        'post' => Post::find($slug)
+        'post' => $post
     ]);
 
-   
-})->where('post','[A-z_\-]+');
+
+});
